@@ -1,0 +1,53 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index fe27de8330..84a9537378 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -4204,6 +4204,48 @@ v8_executable("v8_hello_world") {
+   ]
+ }
+ 
++v8_executable("v8_wasm") {
++  sources = [
++    "samples/wasm.cc",
++  ]
++
++  configs = [
++    # Note: don't use :internal_config here because this target will get
++    # the :external_config applied to it by virtue of depending on :v8, and
++    # you can't have both applied to the same target.
++    ":internal_config_base",
++  ]
++
++  deps = [
++    ":v8",
++    ":v8_libbase",
++    ":v8_libplatform",
++    "//build/win:default_exe_manifest",
++  ]
++}
++
++v8_executable("v8_wasm_c_api") {
++  sources = [
++    "samples/wasm-c-api.cc",
++  ]
++
++  configs = [
++    # Note: don't use :internal_config here because this target will get
++    # the :external_config applied to it by virtue of depending on :v8, and
++    # you can't have both applied to the same target.
++    ":internal_config_base",
++  ]
++
++  deps = [
++    ":v8",
++    ":v8_libbase",
++    ":v8_libplatform",
++    ":v8_maybe_snapshot",
++    ":wee8",
++    "//build/win:default_exe_manifest",
++  ]
++}
++
+ v8_executable("v8_sample_process") {
+   sources = [
+     "samples/process.cc",
